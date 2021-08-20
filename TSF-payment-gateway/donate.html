@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TSF Payment Gateway</title>
+        <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+        <meta name="viewport" content="width=device-wiidth, initial-scale=1.0">
+
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+
+        <!--jQuery library--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!--Latest compiled and minified JavaScript--> 
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
+
+	    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+
+	    <link rel="stylesheet" type="text/css" href="style.css">
+
+	    <link id="theme-style" rel="stylesheet" type="text/css" href="">
+
+	    <!--<link id="theme-style" rel="stylesheet" type="text/css" href="green.css">
+
+	   <link id="theme-style" rel="stylesheet" type="text/css" href="purple.css">-->
+    </head>
+    <body>
+        <!---header/ navbar box-->
+        <div class="navbar">
+            <h3>Created By Aditya Nayak</h3>
+            <a href="index.html">CONTACT</a>
+            <a href="donate.html">DONATE</a>
+            <a href="#contact">HOME</a>
+        </div>
+
+        <!---for razorpay integration-->
+        <div class="main-container">
+            <div class="box">
+                <h1>The Spark Foundation Payment Gateway</h1>
+                <!---<p>An initiative for needy peoples.</p>--->
+            </div> 
+
+            <button class="button" id="rzp-button1">Pay</button>
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script>
+            var options = {
+                "key": "rzp_test_NKrItqr6zz8olC", // Enter the Key ID generated from the Dashboard
+                "amount": "500", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Aditya Nayak",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": "order_HnRTx5duA99yQF", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response){
+                    alert(response.razorpay_payment_id);
+                    alert(response.razorpay_order_id);
+                    alert(response.razorpay_signature)
+                },
+                "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response){
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                    alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+            });
+            document.getElementById('rzp-button1').onclick = function(e){
+                rzp1.open();
+                e.preventDefault();
+            }
+            </script>
+        </div>
+
+        <!---animated waves box-->
+        <div class="wave-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        
+    </body>
+</html>
